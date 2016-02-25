@@ -242,25 +242,3 @@ handlers are registered with `Router.NotFound()`:
 
 * `routing.MethodNotAllowedHandler`: a handler that sends an `Allow` HTTP header indicating the allowed HTTP methods for a requested URL
 * `routing.NotFoundHandler`: a handler triggering 404 HTTP error
-
-
-## Serving Static Files
-
-Static files can be served with the help of `file.Server` and `file.Content` handlers. The former serves files
-under the specified directories, while the latter serves the content of a single file. For example,
-
-```go
-import (
-	"github.com/qiangxue/fasthttp-routing"
-	"github.com/qiangxue/fasthttp-routing/file"
-)
-
-router := routing.NewRouter()
-
-// serve index file
-router.Get("/", file.Content("ui/index.html"))
-// serve files under the "ui" subdirectory
-router.Get("/*", file.Server(file.PathMap{
-	"/": "/ui/",
-}))
-```
