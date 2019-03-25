@@ -100,9 +100,9 @@ func (r *Router) NotFound(handlers ...Handler) {
 // handleError is the error handler for handling any unhandled errors.
 func (r *Router) handleError(c *Context, err error) {
 	if httpError, ok := err.(HTTPError); ok {
-		c.Error(httpError.Error(), httpError.StatusCode())
+		c.ErrorWithHeaders(httpError.Error(), httpError.StatusCode())
 	} else {
-		c.Error(err.Error(), http.StatusInternalServerError)
+		c.ErrorWithHeaders(err.Error(), http.StatusInternalServerError)
 	}
 }
 

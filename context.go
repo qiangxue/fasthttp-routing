@@ -27,6 +27,15 @@ type Context struct {
 	handlers []Handler              // the handlers associated with the current route
 }
 
+var defaultContentType = []byte("text/plain; charset=utf-8")
+// Error sets response status code to the given value and sets response body
+// to the given message.
+func (c *Context) ErrorWithHeaders(msg string, statusCode int) {
+	c.SetStatusCode(statusCode)
+	c.SetContentTypeBytes(defaultContentType)
+	c.SetBodyString(msg)
+}
+
 // Router returns the Router that is handling the incoming HTTP request.
 func (c *Context) Router() *Router {
 	return c.router
