@@ -17,7 +17,7 @@ The package has the following features:
 
 ## Requirements
 
-Go 1.5 or above.
+Go 1.13 or above.
 
 ## Installation
 
