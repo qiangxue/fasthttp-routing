@@ -6,6 +6,7 @@
 package routing
 
 import (
+	"errors"
 	"net/http"
 	"sort"
 	"strings"
@@ -99,7 +100,8 @@ func (r *Router) NotFound(handlers ...Handler) {
 
 // handleError is the error handler for handling any unhandled errors.
 func (r *Router) handleError(c *Context, err error) {
-	if httpError, ok := err.(HTTPError); ok {
+	var httpError HTTPError
+	if errors.As(err, &httpError) {
 		c.Error(httpError.Error(), httpError.StatusCode())
 	} else {
 		c.Error(err.Error(), http.StatusInternalServerError)
