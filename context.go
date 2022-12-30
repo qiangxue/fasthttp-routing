@@ -25,6 +25,8 @@ type Context struct {
 	data     map[string]interface{} // data items managed by Get and Set
 	index    int                    // the index of the currently executing handler in handlers
 	handlers []Handler              // the handlers associated with the current route
+	URLParams URLParams
+	Header Header
 }
 
 // Router returns the Router that is handling the incoming HTTP request.
@@ -107,6 +109,8 @@ func (c *Context) init(ctx *fasthttp.RequestCtx) {
 	c.data = nil
 	c.index = -1
 	c.Serialize = Serialize
+	c.URLParams = URLParams{ctx}
+	c.Header = Header{ctx}
 }
 
 // Serialize converts the given data into a byte array.
