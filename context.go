@@ -6,6 +6,7 @@ package routing
 
 import (
 	"fmt"
+	"routing/utils"
 
 	"github.com/valyala/fasthttp"
 )
@@ -111,6 +112,39 @@ func (c *Context) init(ctx *fasthttp.RequestCtx) {
 	c.Serialize = Serialize
 	c.URLParams = URLParams{ctx}
 	c.Header = Header{ctx}
+}
+
+func (c *Context) Type(extension string, charset ...string) *Context {
+	if len(charset) > 0 {
+		c.Response.Header.SetContentType(utils.GetMIME(extension) + "; charset=" + charset[0])
+	} else {
+		c.Response.Header.SetContentType(utils.GetMIME(extension))
+	}
+	return c
+}
+
+func (c *Context) SendString(body string) error {
+	c.Response.SetBodyString(body)
+	return nil
+}
+
+func (c *Context) Redirect(location string, status ...int) error {
+	c.setCanonical(HeaderLocation, location)
+	if len(status) > 0 {
+		c.Status(status[0])
+	} else {
+		c.Status(StatusFound)
+	}
+	return nil
+}
+
+func (c *Context) Status(status int) *Context {
+	c.Response.SetStatusCode(status)
+	return c
+}
+
+func (c *Context) setCanonical(key string, val string) {
+	c.Response.Header.SetCanonical(utils.UnsafeBytes(key), utils.UnsafeBytes(val))
 }
 
 // Serialize converts the given data into a byte array.
