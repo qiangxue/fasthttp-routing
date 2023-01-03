@@ -1,4 +1,4 @@
-package routing_test
+package routing
 
 import (
 	"log"

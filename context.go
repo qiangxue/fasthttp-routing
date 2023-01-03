@@ -6,8 +6,7 @@ package routing
 
 import (
 	"fmt"
-	"routing/utils"
-
+	"github.com/gly-hub/fasthttp-routing/utils"
 	"github.com/valyala/fasthttp"
 )
 

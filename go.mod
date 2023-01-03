@@ -1,4 +1,4 @@
-module routing
+module github.com/gly-hub/fasthttp-routing
 
 go 1.17
 
